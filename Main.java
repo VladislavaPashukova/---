@@ -39,7 +39,7 @@ public class Main {
 //      Проверка на количество эллементов, выбрасываем исключение
         for (int i =0; i<blacks.length; i++){
           if (i >= 2 ){
-         throw new Exception("Вы ввели больше 2-х чисел");
+         throw new Exception("Вы ввели неправильное  значение");
          }}
 //      Убираем пробелы у str1 в начале и конце
         String string3 = st1.trim();
@@ -49,16 +49,16 @@ public class Main {
 //      Преобразуем римскую СС на арабскую
         num1 = romanToNum(st0);
         num2 = romanToNum(string3);
-//      Проверка. Числа не должны быть меньше 0
-            if (num1 < 0 && num2 < 0) {
-                throw new Exception("Числа меньше 0");
-            } else {
 //      Считаем результат и выводим результат на римской СС
                 result = calculated(num1, num2, operation);
                 System.out.println("Результат на Римской системе счисления");
                 String resultRoman = convertToRoman(result);
+                if (resultRoman == "O"){
+                    throw new Exception();
+                } else {
                 System.out.println(st0 + " " + operation + " " + string3 + " = " + resultRoman);
-            }} else {
+            }}
+                else {
 //      Иначе считаем и выводим результат на арабской СС
             num1 = Integer.parseInt(st0);
             num2 = Integer.parseInt(string3);
@@ -81,7 +81,6 @@ public class Main {
     }
 //      Метод для конвертирования из римской в арабсую СС
     private static int romanToNum (String roman) {
-        try {
             if (roman.equals("I")) {
                 return 1;
             } else if (roman.equals("II")) {
@@ -103,15 +102,12 @@ public class Main {
             } else if (roman.equals("X")) {
                 return 10;
             }
-        } catch (InputMismatchException e) {
-            throw new InputMismatchException("Неверный формат данных");
-        }
         return -1;
     }
 //      Метод "Калькулятор"
-    public static int calculated (int num1, int num2, char op) {
+    public static int calculated (int num1, int num2, char op) throws Exception {
         int result = 0;
-        if (num1<11 && num2<11){
+        if ((num1<11 && num2<11) && ( num1>=1 && num2>=1)){
 
         switch (op) {
             case '+':
@@ -124,13 +120,8 @@ public class Main {
                 result = num1 * num2;
                 break;
             case '/':
-                try {
                     result = num1 / num2;
-                }
-                catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-        }}
+        }} else { throw  new Exception();}
         return result;
     }
 }
